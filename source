@@ -1,15 +1,15 @@
 import math
+import string
 
-inp = 13331135161
-base = 16
+inp = 17
+base = 2
 hold_input = inp
 
 deg = 0
 hold = 0
 col = []
 cold = []
-while inp > base ** (deg + 1):
-    deg += 1
+deg = math.floor(math.log(inp, base)-1)
 
 while inp > 0 and deg > -10:
     hold = math.floor(inp / (base ** deg))
@@ -26,29 +26,12 @@ if deg > 0:
 
 print(f"{hold_input} in base {base} is ", end='')
 
-# if the number can be represented with digits 0-9
-if max(col) < 10:
-    hold = 0
-    for i, v in enumerate(col):
-        hold += v * 10 ** cold[i]
-    print(hold)
-
-# and if it cant
-stg = ''
+# if the number cant be represented with 0-9
 if max(col) >= 10:
+    alphabet_string = string.ascii_uppercase
+    alphabet = list(alphabet_string)
     for i, v in enumerate(col):
-        if v == 10:
-            col[i] = "A"
-        if v == 11:
-            col[i] = "B"
-        if v == 12:
-            col[i] = "C"
-        if v == 13:
-            col[i] = "D"
-        if v == 14:
-            col[i] = "E"
-        if v == 15:
-            col[i] = "F"
-    for x in col:
-        stg += str(x)
-    print(stg)
+        if v >= 10:
+            col[i] = alphabet[v-10]
+    
+print(*col, sep='')
