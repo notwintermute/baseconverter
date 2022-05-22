@@ -1,37 +1,26 @@
-import math
 import string
 
-inp = 17
-base = 2
-hold_input = inp
+inp = 245724578  # input
+base = 16  # target base
+col = []  # where the number will be stored
 
-deg = 0
-hold = 0
-col = []
-cold = []
-deg = math.floor(math.log(inp, base)-1)
+# Divide the decimal number by the radix of the target base
+# The remainder from step 1 becomes the value for the current column.
+# Use the quotient (answer) from step 1 as the decimal value to calculate the next column.
+# Return to step 1 and repeat until the quotient is zero.
+dec = inp
+while dec > 0:
+    dec, rem = divmod(dec, base)
+    col.append(rem)
 
-while inp > 0 and deg > -10:
-    hold = math.floor(inp / (base ** deg))
-    col.append(hold)
-    inp -= hold * base ** deg
-    cold.append(deg)
-    deg -= 1
-
-if deg > 0:
-    while deg > 0:
-        col.append(0)
-        cold.append(deg)
-        deg -= 1
-
-print(f"{hold_input} in base {base} is ", end='')
-
-# if the number cant be represented with 0-9
+# if the number cant be represented with 0-9 replace it with alphabet characters
 if max(col) >= 10:
     alphabet_string = string.ascii_uppercase
     alphabet = list(alphabet_string)
     for i, v in enumerate(col):
         if v >= 10:
             col[i] = alphabet[v-10]
-    
+
+# prints result
+print(f"{inp} in base {base} is ", end='')
 print(*col, sep='')
